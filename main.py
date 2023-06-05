@@ -47,35 +47,36 @@ for i in range (1,len(data[0])):
 
 predmeti = ';'.join(data[0])
 
-p1 = data[3][0]+';'
-p2 = data[3][0]+';'
-p3 = data[3][0]+';'
-god = data[3][0]+';'
-predmeti_p1 = ''
-predmeti_p2 = ''
-predmeti_p3 = ''
-predmeti_god = ''
-
+predmeti_p1 = ';'
 for i in range(len(data[2])):
     if data[2][i] == 'Аттестационный период 1':
         predmeti_p1 += data[0][i] + ';'
-        p1 += data[3][i] + ';'
-    if data[2][i] == 'Аттестационный период 2':
-        predmeti_p2 += data[0][i] + ';'
-        p2 += data[3][i] + ';'
-    if data[2][i] == 'Аттестационный период 3':
-        predmeti_p3 += data[0][i] + ';'
-        p3 += data[3][i] + ';'
-    if data[2][i] == 'Год':
-        predmeti_god += data[0][i] + ';'
-        god += data[3][i] + ';'
-
 
 print(predmeti_p1)
-print(p1)
-print(predmeti_p2)
-print(p2)
-print(predmeti_p3)
-print(p3)
-print(predmeti_god)
-print(god)
+
+for fio in range(3,len(data)):
+    p1 = 'Аттестационный период 1;'
+    p2 = 'Аттестационный период 2;'
+    if periods == 3:
+        p3 = 'Аттестационный период 3;'
+    god = 'Год;'
+    predmeti_p1 = ';'
+    
+    for i in range(len(data[2])):
+        if data[2][i] == 'Аттестационный период 1':
+            predmeti_p1 += data[0][i] + ';'
+            p1 += data[fio][i] + ';'
+        if data[2][i] == 'Аттестационный период 2':
+            p2 += data[fio][i] + ';'
+        if data[2][i] == 'Аттестационный период 3' and periods == 3:
+            p3 += data[fio][i] + ';'
+        if data[2][i] == 'Год' and data[0][i] != 'Математика':
+            god += data[fio][i] + ';'
+    
+    print(data[fio][0])
+
+    print(p1)
+    print(p2)
+    if periods == 3:
+        print(p3)
+    print(god)
