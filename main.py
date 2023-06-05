@@ -1,16 +1,20 @@
-# This is a sample Python script.
+##############################################################################################
+### Программа для облегчения проверки из выгрузок ЭЖД отметок по средним баллам и периодам ###
+##############################################################################################
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import pandas as pd
 
+### Чтение периодов из выгрузки ###
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Укажите кол-во периодов для выгрузки
+periods = 2
 
+# Открытие файлов с периодами из выгрузки
+url_period_1 = pd.read_excel('data/10Я-1.xlsx')
+url_period_2 = pd.read_excel('data/10Я-2.xlsx')
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if periods == 3:
+    url_period_3 = pd.read_excel('data/10Я-3.xlsx')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Открытие файла с итоговыми оценками за периоды
+url_all_periods = pd.read_excel('data/10Я-все.xlsx')
