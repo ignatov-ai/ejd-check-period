@@ -70,6 +70,7 @@ for i in range(len(data[2])):
         predmeti_god += data[0][i] + ';'
         god += data[3][i] + ';'
 
+
 print(predmeti_p1)
 print(p1)
 print(predmeti_p2)
