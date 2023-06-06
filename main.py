@@ -80,3 +80,17 @@ for fio in range(3,len(data)):
     if periods == 3:
         print(p3)
     print(god)
+
+# создание книги для проверенной выгрузки
+out_book = openpyxl.Workbook()
+out_book.remove(out_book.active)
+out_sheet = out_book.create_sheet("Проверка ГОД")
+
+out_sheet.append(list(data[fio][0]))
+out_sheet.append(list(p1))
+out_sheet.append(list(p2))
+if periods == 3:
+    out_sheet.append(list(p3))
+out_sheet.append(list(god))
+
+out_book.save('test.xlsx')
