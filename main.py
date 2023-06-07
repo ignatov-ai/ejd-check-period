@@ -88,7 +88,7 @@ out_sheet = out_book.create_sheet("Проверка ГОД")
 out_sheet = out_book.active
 out_sheet.column_dimensions['A'].width = 30
 
-for col in 'BCDEFGHIJKLMNOPQRSTUVWXWZ':
+for col in 'BCDEFGHIJKLMNOPQRSTUVWXYZ':
     out_sheet.column_dimensions[col].width = 4
 
 
