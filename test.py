@@ -16,6 +16,7 @@ for s in files:
         data_files.append(s)
 print(data_files)
 
+
 # Открытие файла с итоговыми оценками за периоды
 file_name_all_periods = '10Ч-Костина-все.xlsx'
 
