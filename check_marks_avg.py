@@ -6,15 +6,19 @@ import openpyxl
 from openpyxl.styles import Alignment, PatternFill, Font, Fill, NamedStyle, Border
 from math import ceil
 
-file_name_all_periods = '9ч.xlsx'
+file_name_all_periods = '9ч-расширенный.xlsx'
 
 book = openpyxl.load_workbook(filename='data/' + file_name_all_periods)
 
 sheet_names = book.sheetnames
-print(sheet_names)
 
 for s in range(len(sheet_names)):
     sheet = book.worksheets[s]
+
+    # Проверяем, является ли ячейка A1 объединенной
+    merged_ranges = sheet.merged_cells.ranges.copy()
+    for merged_range in merged_ranges:
+        sheet.unmerge_cells(merged_range.coord)
 
     for i in range(21, 24):
         for j in range(1,40,2):
@@ -34,7 +38,7 @@ for s in range(len(sheet_names)):
     for s in col:
         t = ''.join(s)
         sheet.column_dimensions[t].width = 3
-        if i == 150:
+        if i == 400:
             break
         i += 1
     sheet.column_dimensions['A'].width = 4
@@ -55,27 +59,36 @@ for s in range(len(sheet_names)):
     col = itertools.chain(letters, itertools.product(letters, repeat=2))
     for c in col:
         stop = False
-        for row in range(3,40):
+        for row in range(2,40):
             cell = ''.join(c)+str(row)
             #print(cell,sheet[cell].value)
-            if sheet[cell].value in ['2', '3', '4', '5']:
+            if sheet[cell].value in ['1','2', '3', '4', '5']:
                 sheet[cell].value = int(sheet[cell].value)
-            if cell[:2] == 'EU':
+            elif sheet[cell].value == None:
+                sheet[cell].value = sheet[cell].value or ''
+
+            if cell[:2] == 'OK':
                 stop = True
                 break
         if stop:
             break
 
-    # записываем данные в массив data
-    data = []
-    for row in sheet.iter_rows(values_only=True):
-        row_data = []
-        for cell in row:
-            if cell is not None:
-                row_data.append(cell)
-            else:
-                row_data.append('')
-        data.append(row_data)
+    for i in range(4,sheet.max_row):
+        sum_period = 0
+        count = 0
+        for j in range(3,sheet.max_column-1):
+            mark = sheet.cell(row=i, column=j).value
+            koef = sheet.cell(row=i, column=j + 1).value
+
+            if sheet.cell(row=3, column=j).value == 'оц' and (mark and koef) != '':
+                print('оц =',mark,'коэф =',koef,'итог = ',mark*koef,sheet.cell(row=i, column=j))
+                sum_period = mark*koef
+                count += 1
+
+            print(sheet.cell(row=2, column=j).value)
+            if (sheet.cell(row=2, column=j).value).find('АП') != -1:
+                print(sum_period,count,sum_period/count)
+
 
 
 # Сохраняем книгу
